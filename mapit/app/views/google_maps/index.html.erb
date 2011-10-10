@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<h1>Listing google_maps</h1>
+
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 300px }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map_canvas { height: 100% }
+</style>
+<script type="text/javascript"
+    src="http://maps.googleapis.com/maps/api/js?sensor=true">
+</script>
+<script type="text/javascript">
+  function initialize() {
+    var latlng = new google.maps.LatLng(<%= @lat -%>, <%= @lon -%> );
+    var myOptions = {
+      zoom: 10,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+  }
+
+</script>
+</head>
+
+<body onload="initialize()">
+<div id="map_canvas" style="width:100%; height:100%"></div>
+
+<table>
+  <tr>
+    <th>Location</th>
+    <th>Lat</th>
+    <th>Lon</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @google_maps.each do |google_map| %>
+  <tr>
+    <td><%= google_map.location %></td>
+    <td><%= google_map.lat %></td>
+    <td><%= google_map.lon %></td>
+    <td><%= link_to 'Show', google_map %></td>
+    <td><%= link_to 'Edit', edit_google_map_path(google_map) %></td>
+    <td><%= link_to 'Destroy', google_map, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Google map', new_google_map_path %>
+
+</body>
+
+</html>
